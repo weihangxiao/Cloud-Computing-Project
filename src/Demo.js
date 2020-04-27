@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Button, Select, DatePicker } from 'antd';
+
 
 const { Option } = Select;
 const layout = {
@@ -109,6 +110,17 @@ const Demo = () => {
             </Form.Item>
           ) : null
         }
+      </Form.Item>
+      <Form.Item
+          name="date"
+              label="Select The Date"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+      >
+         <DatePicker />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
