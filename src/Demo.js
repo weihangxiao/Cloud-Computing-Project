@@ -22,23 +22,23 @@ const tailLayout = {
 const Demo = () => {
   const [form] = Form.useForm();
 
-  const onGenderChange = value => {
+  const onHealthStatusChange = value => {
     switch (value) {
-      case 'male':
+      case 'health':
         form.setFieldsValue({
-          note: 'Hi, man!',
+          temperature: '37',
         });
         return;
 
-      case 'female':
+      case 'sympton':
         form.setFieldsValue({
-          note: 'Hi, lady!',
+          temperature: '38',
         });
         return;
 
       case 'other':
         form.setFieldsValue({
-          note: 'Hi there!',
+          temperature: '37',
         });
     }
   };
@@ -53,16 +53,16 @@ const Demo = () => {
 
   const onFill = () => {
     form.setFieldsValue({
-      note: 'Hello world!',
-      gender: 'male',
+      temperature: '37',
+      status: 'healthy',
     });
   };
 
   return (
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
       <Form.Item
-        name="note"
-        label="Note"
+        name="temperature"
+        label="Body Temperature"
         rules={[
           {
             required: true,
@@ -72,8 +72,8 @@ const Demo = () => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="gender"
-        label="Gender"
+        name="status"
+        label="Status"
         rules={[
           {
             required: true,
@@ -82,23 +82,23 @@ const Demo = () => {
       >
         <Select
           placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
+          onChange={onHealthStatusChange}
           allowClear
         >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
+          <Option value="health">Feeling Good</Option>
+          <Option value="sympton">Symptons of Cold&Flu</Option>
+          <Option value="other">Other</Option>
         </Select>
       </Form.Item>
       <Form.Item
         noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
+        shouldUpdate={(prevValues, currentValues) => prevValues.status !== currentValues.status}
       >
         {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
+          getFieldValue('status') === 'other' ? (
             <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
+              name="customizeStatus"
+              label="Customize Your Health Status"
               rules={[
                 {
                   required: true,
