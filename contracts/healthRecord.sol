@@ -51,7 +51,7 @@ contract healthRecord {
         if(_temp <= 37 && !_hasSymp){
             u.record.counter ++;
             if(u.record.counter >= u.record.total){
-                u.record.code = 0;  //change to green code
+                u.record.code = 0;  //change into green code
             }
         }else{
             if(u.record.code == 0){
@@ -62,6 +62,10 @@ contract healthRecord {
                     u.record.code = 1;
                     u.record.total = 7;
                 }
+            }
+            if(u.record.code == 1 && _temp > 37){ //yellow to red
+                u.record.code = 2;
+                u.record.total = 14;
             }
             u.record.counter = 0; //resume when unhealthy
         }
