@@ -20,7 +20,7 @@ const tailLayout = {
   },
 };
 
-const Demo = () => {
+const HealthForm = () => {
   const [form] = Form.useForm();
 
   const onHealthStatusChange = value => {
@@ -137,4 +137,4 @@ const Demo = () => {
   );
 };
 
-export default Demo;
+export default HealthForm;

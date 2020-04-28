@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Demo from './Demo';
+import HealthForm from './HealthForm';
+import Code from './Code';
 import * as serviceWorker from './serviceWorker';
 import QRCode from 'qrcode.react';
 import {Button} from 'antd';
@@ -10,18 +11,13 @@ import {Button} from 'antd';
 ReactDOM.render(
 	<div className="App">
 		<div class="Headers">
-			<h1>Covid-19 Pass</h1> 
-    		<QRCode value='https://twitter.com/realDonaldTrump/'
-    			size={150} // size
-    			fgColor="#00FF00" // QRcode color
-    		/>
-    		<Button type="primary" htmlType="update">
-          		Update QR Code
-        	</Button>
+			<h1>Covid-19 Pass</h1>
 		</div>
-
+		<div class="qrCode">
+			<Code />
+		</div>
 		<div class="Form">
-			<Demo />
+			<HealthForm />
 		</div>
     </div>, document.getElementById('root'));
 
