@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import QRCode from 'qrcode.react';
 import {Button} from 'antd';
 
-
 const Code = () => {
+  const color = ["#00FF00", "#FFD700", "#DC143C"];
+  const healthClass = 0;
+  const codeValue = 'past health records';
   return (
     <div>
-    <QRCode value='https://twitter.com/realDonaldTrump/'
+    <QRCode value={codeValue}
       size={120} // size
-      fgColor="#00FF00" // QRcode color
+      fgColor = {color[healthClass]} // QRcode color
     />
     <Button type="primary" htmlType="update">
           Update QR Code
