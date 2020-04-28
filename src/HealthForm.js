@@ -20,6 +20,13 @@ const tailLayout = {
   },
 };
 
+const userForm = { //after click Submit what we write into the blockchain.
+  Address: "区块链的地址",
+  temperature: 37,
+  status: "",
+  date: ""
+};
+
 const HealthForm = () => {
   const [form] = Form.useForm();
 
@@ -43,6 +50,10 @@ const HealthForm = () => {
         });
     }
   };
+
+  const onSubmit = values => {
+    //代补充：写入区块链
+  }
 
   const onFinish = values => {
     console.log(values);
@@ -123,7 +134,7 @@ const HealthForm = () => {
          <DatePicker />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={onSubmit}>
           Submit
         </Button>
         <Button htmlType="button" onClick={onReset}>
