@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 
-
+//表单的css
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -20,13 +20,15 @@ const tailLayout = {
   },
 };
 
-const userForm = { //after click Submit what we write into the blockchain.
-  Address: "区块链的地址",
-  temperature: 37,
-  status: "",
-  date: ""
-};
+// const userForm = { // after click Submit what we write into the blockchain.
+//   Address: "区块链的地址",
+//   temperature: 37,
+//   status: "",
+//   date: ""
+// };
 
+
+//函数式组件: 表单相关的都在这个函数里
 const HealthForm = () => {
   const [form] = Form.useForm();
 
@@ -51,9 +53,11 @@ const HealthForm = () => {
     }
   };
 
-  const onSubmit = values => {
-    //代补充：写入区块链
-  }
+  const onSubmit = (values) => {
+    //待补充1-写操作：实现将表单的values写入区块链数据库（该函数在点击submit按钮后触发
+    //现在默认在命令行输入values
+      console.log('Received values of form: ', values);
+  };
 
   const onFinish = values => {
     console.log(values);
@@ -66,12 +70,17 @@ const HealthForm = () => {
   const onFill = () => {
     form.setFieldsValue({
       temperature: '37',
-      status: 'healthy',
+      status: 'Feeling Good',
     });
   };
 
+  const handleDateChange = (date, dateString) => {
+    console.log('Selected Time: ', date);
+    console.log('Seleected Time in the format of string', dateString);//也可以用string形式存更方便写入区块链？
+  };
+
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+    <Form {...layout} form={form} name="userHealthForm" onFinish={onFinish}>
       <Form.Item
         name="temperature"
         label="Body Temperature"
@@ -98,7 +107,7 @@ const HealthForm = () => {
           allowClear
         >
           <Option value="health">Feeling Good</Option>
-          <Option value="sympton">Symptons of Cold&Flu</Option>
+          <Option value="sympton">Symptons of Cold & Flu</Option>
           <Option value="other">Other</Option>
         </Select>
       </Form.Item>
@@ -124,14 +133,15 @@ const HealthForm = () => {
       </Form.Item>
       <Form.Item
           name="date"
-              label="Select The Date"
-              rules={[
+          label="Select The Date"
+          rules={[
                 {
                   required: true,
                 },
-              ]}
+          ]}
       >
-         <DatePicker />
+         <DatePicker
+           onChange={handleDateChange} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit" onClick={onSubmit}>
@@ -141,7 +151,7 @@ const HealthForm = () => {
           Reset
         </Button>
         <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
+          Quick Fill
         </Button>
       </Form.Item>
     </Form>
