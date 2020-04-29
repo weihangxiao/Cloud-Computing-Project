@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Demo from './Demo';
+import config from './aws-exports' // new
+import Amplify from 'aws-amplify' // new
 import * as serviceWorker from './serviceWorker';
 import QRCode from 'qrcode.react';
 import {Button} from 'antd';
+import Chatbot from './chatbot';
+Amplify.configure(config) // new
 
 
 ReactDOM.render(
@@ -22,6 +26,9 @@ ReactDOM.render(
 
 		<div class="Form">
 			<Demo />
+		</div>
+		<div>
+			<Chatbot />
 		</div>
     </div>, document.getElementById('root'));
 

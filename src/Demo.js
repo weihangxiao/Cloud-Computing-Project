@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
-
+import config from './aws-exports' // new
+import Amplify from 'aws-amplify' // new
+Amplify.configure(config) // new
 
 const { Option } = Select;
 const layout = {
@@ -60,7 +62,8 @@ const Demo = () => {
   };
 
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+    <div className="App">
+      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
       <Form.Item
         name="temperature"
         label="Body Temperature"
@@ -134,6 +137,7 @@ const Demo = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
   );
 };
 
