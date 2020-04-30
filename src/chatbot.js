@@ -32,7 +32,7 @@ class Chatbot extends Component {
     async submitMessage() {
       const { input } = this.state
       if (input === '') return
-      const message = new Message({
+      const message = new Message({ //input message
         id: 0,
         message: input,
       })
@@ -42,8 +42,8 @@ class Chatbot extends Component {
         messages,
         input: ''
       })
-      const response = await Interactions.send("CovidSymptoms", input);
-      const responseMessage = new Message({
+      const response = await Interactions.send("CovidSymptoms", input); // passing two argumens: the bot name and the value
+      const responseMessage = new Message({ // take the response from the bot and create another message
         id: 1,
         message: response.message,
       })
@@ -51,9 +51,9 @@ class Chatbot extends Component {
       this.setState({ messages })
   
       if (response.dialogState === 'Fulfilled') {
-        if (response.intentName === 'CovidSymptoms') {
-          const { slots: { temperature } } = response
-          const finalMessage = `${temperature}`
+        if (response.intentName === 'CovidSymptomsChecking') {
+          //const { slots: { Temperature, answerquestion, Symptomscheck} } = response
+          const finalMessage = `Chat Ending!`
           this.setState({ finalMessage })
         }
       }
