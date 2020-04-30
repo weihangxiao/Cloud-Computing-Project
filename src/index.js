@@ -6,6 +6,10 @@ import Code from './Code';
 import * as serviceWorker from './serviceWorker';
 import QRCode from 'qrcode.react';
 import {Button} from 'antd';
+import Chatbot from './chatbot';
+import config from './aws-exports' // new
+import Amplify from 'aws-amplify' // new
+Amplify.configure(config) // new
 
 
 ReactDOM.render(
@@ -18,6 +22,9 @@ ReactDOM.render(
 		</div>
 		<div class="Form">
 			<HealthForm />
+		</div>
+		<div>
+			<Chatbot />
 		</div>
     </div>, document.getElementById('root'));
 

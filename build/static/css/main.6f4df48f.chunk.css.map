@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAEA,SACE,gBACF","file":"main.6f4df48f.chunk.css","sourcesContent":["@import '../node_modules/antd/dist/antd.css';\n\n.ant-btn {\n  margin-right: 8px;\n}\n"]}
