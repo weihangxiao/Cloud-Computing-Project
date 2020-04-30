@@ -10,23 +10,25 @@ class Chatbot extends Component {
       input: '',
       finalMessage: '',
       messages: [
-        new Message({
+        new Message({   // set initial message which is hte first item in the array of message being held in our state
           id: 1,
           message: "Hello, how can I help you today?",
         })
       ]
     }
-    _handleKeyPress = (e) => {
+    _handleKeyPress = (e) => { // This will listen to the keyboard input and submit a new message if the Enter key is pressed.
       if (e.key === 'Enter') {
         this.submitMessage()
       }
     }
-    onChange(e) {
+    onChange(e) { //update the input field with the current value of the text input
       const input = e.target.value
       this.setState({
         input
       })
     }
+
+    
     async submitMessage() {
       const { input } = this.state
       if (input === '') return
@@ -60,7 +62,7 @@ class Chatbot extends Component {
       return (
         <div className="Chatbot">
           <header style={styles.header}>
-            <p style={styles.headerTitle}>Welcome to my Covid Symptoms Checker bot!</p>
+            <h1 style={styles.headerTitle}>Welcome to my Covid Symptoms Checker bot!</h1>
           </header>
           <div style={styles.messagesContainer}>
           <h2>{this.state.finalMessage}</h2>
@@ -86,6 +88,7 @@ class Chatbot extends Component {
     bubbleStyles: {
       text: {
         fontSize: 16,
+        
       },
       chatbubble: {
         borderRadius: 30,
@@ -93,13 +96,15 @@ class Chatbot extends Component {
       }
     },
     headerTitle: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
       color: 'white',
       fontSize: 22
     },
     header: {
       backgroundColor: 'rgb(0, 132, 255)',
-      padding: 20,
-      borderTop: '12px solid rgb(204, 204, 204)'
+      padding: 5
     },
     messagesContainer: {
       display: 'flex',
