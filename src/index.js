@@ -10,13 +10,13 @@ import {Button} from 'antd';
 
 ReactDOM.render(
 	<div className="App">
-		<div class="Headers">
+		<div className="Headers">
 			<h1>Covid-19 Pass</h1>
 		</div>
-		<div class="qrCode">
+		<div className="qrCode">
 			<Code />
 		</div>
-		<div class="Form">
+		<div className="Form">
 			<HealthForm />
 		</div>
     </div>, document.getElementById('root'));

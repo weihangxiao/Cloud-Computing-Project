@@ -13,8 +13,5 @@ For yellow code:
      keep healthy (normal temp and no symptom) for 7 days ==> green
      have symptom ==> resume quarantine
      Abnormal temp, code ==> red
-     
+
 Solidity不支持float，前端读体温的时候可以先近似成整数
-     
-   
-    
