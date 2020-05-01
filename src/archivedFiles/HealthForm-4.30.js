@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Form, Input, Button, Select, DatePicker, InputNumber } from 'antd';
+import { Form, Input, Button, Select, DatePicker } from 'antd';
 // import config from './aws-exports' // new
 // import Amplify from 'aws-amplify' // new
 // Amplify.configure(config) // new
@@ -38,19 +38,19 @@ const HealthForm = () => {
     switch (value) {
       case 'health':
         form.setFieldsValue({
-          temperature: 37,
+          temperature: '37',
         });
         return;
 
       case 'sympton':
         form.setFieldsValue({
-          temperature: 38,
+          temperature: '38',
         });
         return;
 
       case 'other':
         form.setFieldsValue({
-          temperature: 37,
+          temperature: '37',
         });
     }
   };
@@ -92,7 +92,7 @@ const HealthForm = () => {
           },
         ]}
       >
-        <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="status"
@@ -143,7 +143,7 @@ const HealthForm = () => {
           ]}
       >
          <DatePicker
-         />
+           onChange={handleDateChange} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit" onClick={onSubmit}>
