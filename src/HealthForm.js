@@ -81,7 +81,19 @@ const HealthForm = () => {
     console.log('Seleected Time in the format of string', dateString);//也可以用string形式存更方便写入区块链？
   };
 
+  const style = {
+    form: {
+      // display: 'flex',
+      // justifyContent: 'center'
+      position: 'relative',
+      top: '200px'
+      // top: '50%',
+      // left: '50%'
+    }
+  }
+
   return (
+    <div name="healthform" style={style.form}>
     <Form {...layout} form={form} name="userHealthForm" onFinish={onFinish}>
       <Form.Item
         name="temperature"
@@ -157,6 +169,7 @@ const HealthForm = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
   );
 };
 

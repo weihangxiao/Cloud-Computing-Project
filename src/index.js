@@ -9,26 +9,77 @@ import {Button} from 'antd';
 import Chatbot from './chatbot';
 import config from './aws-exports' // new
 import Amplify from 'aws-amplify' // new
+import {Navbar, Form, Nav, FormControl} from 'react-bootstrap';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
 Amplify.configure(config) // new
 
 
-ReactDOM.render(
+const style = {
+	header: {
+		width: '100vw',
+		marginLeft: '0',
+		marginRight: '0',
+		height: '10vh',
+		top: '0'
+
+	},
+    customflex: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      	color: 'white'
+    }
+}
+
+ReactDOM.render((
 	<div className="App">
-		<div class="Headers">
-			<h1>Covid-19 Pass</h1>
-		</div>
-		<div class="qrCode">
-			<Code />
-		</div>
-		<div class="Form">
-			<HealthForm />
-		</div>
-		<div>
-			<Chatbot />
-		</div>
-    </div>, document.getElementById('root'));
+		<Navbar bg="dark"   style={style.header} variant="dark">
+			<div class="col-4"></div>
+			<div class="home col-4" style={style.customflex}>
+				<div class="h3">Covid-19 Symptom Checker</div>
+			</div>
+		{/* <Navbar.Brand style={style.customflex}>Covid-19 Symptom Checker</Navbar.Brand> */}
+  		</Navbar>
+		<br></br>
+		<Router>
+			<Route path="/" render={props =>
+					<div>
+						<Code />
+						<HealthForm/>
+			</div>}
+			/>
+			<Route path="/check" component={Chatbot} />
+		 	</Router>
+			{/* <div class="qrCode">
+				<Code />
+			</div>
+			<div class="Form">
+				<HealthForm />
+			</div>
+			<div>
+				<Chatbot />
+			</div> */}
+	</div>), document.getElementById('root'));
+	{/* // <div className="App">
+	// 	<div class="Headers">
+	// 		<h1>Covid-19 Pass</h1>
+	// 	</div>
+	// 	<div class="qrCode">
+	// 		<Code />
+	// 	</div>
+	// 	<div class="Form">
+	// 		<HealthForm />
+	// 	</div>
+	// 	<div>
+	// 		<Chatbot />
+	// 	</div>
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// Learn more about service workers: https://bit.ly/CRA-PWA */}
+
+
+
+
 serviceWorker.register();

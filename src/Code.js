@@ -24,20 +24,40 @@ const Code = () => {
         }
       ]
   };
+
   const onUpdateQRCode = () => {
     //待补充2-查操作：根据区块链返回结果更新上述healthClass和codeValue
+  };
+
+  const style = {
+    qrcode: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    button: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
   }
   return (
     <div>
-    <QRCode value={codeValue}
-      size={120} // size
-      fgColor = {color[healthClass]} // QRcode color
-    />
-    <Button type="primary" htmlType="update" onClick = {onUpdateQRCode}>
-          Update QR Code
-    </Button>
+        <div name='qrcode' style={style.qrcode}>
+            <QRCode value={codeValue}
+              size={200} // size
+              fgColor = {color[healthClass]} // QRcode color
+            />
+        </div>
+        <br></br>
+      <div name='button' style={style.button}> 
+          <Button type="primary"  htmlType="update" onClick = {onUpdateQRCode}>
+              Update QR Code
+          </Button>
+      </div>
     </div>
   )
+
 }
 
 export default Code;
