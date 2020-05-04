@@ -15,6 +15,7 @@ contract healthRecord {
         string name;
         address id;
         Record record;
+        bool hasRecord; 
     }
     
     // exist or not
@@ -43,10 +44,10 @@ contract healthRecord {
             u.record.code = 2;
         }
         
-        users[msg.sender] = User({name:_name,id:msg.sender,record:u.record});
+        users[msg.sender] = User({name:_name,id:msg.sender,record:u.record,hasRecord:true});
     }
     
-    function updateRecord(uint _temp, bool _hasSymp) public{
+    function updateRecord(uint _temp, bool _hasSymp) public checkUser(msg.sender){
         User u = users[msg.sender];
         if(_temp <= 37 && !_hasSymp){
             u.record.counter ++;
@@ -75,6 +76,13 @@ contract healthRecord {
         User u = users[msg.sender];
         return u.record.code;
     }
+    
+    
+    function hasRecord() public view returns(bool){
+        User u = users[msg.sender];
+        return u.hasRecord;
+    }
+    
      
 
 }
