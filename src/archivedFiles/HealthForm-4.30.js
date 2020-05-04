@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../index.css';
+import './index.css';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
-
 // import config from './aws-exports' // new
 // import Amplify from 'aws-amplify' // new
 // Amplify.configure(config) // new
@@ -39,19 +38,19 @@ const HealthForm = () => {
     switch (value) {
       case 'health':
         form.setFieldsValue({
-          temperature: 37,
+          temperature: '37',
         });
         return;
 
       case 'sympton':
         form.setFieldsValue({
-          temperature: 38,
+          temperature: '38',
         });
         return;
 
       case 'other':
         form.setFieldsValue({
-          temperature: 37,
+          temperature: '37',
         });
     }
   };
@@ -82,19 +81,7 @@ const HealthForm = () => {
     console.log('Seleected Time in the format of string', dateString);//也可以用string形式存更方便写入区块链？
   };
 
-  const style = {
-    form: {
-      // display: 'flex',
-      // justifyContent: 'center'
-      position: 'relative',
-      top: '200px'
-      // top: '50%',
-      // left: '50%'
-    }
-  }
-
   return (
-    <div name="healthform" style={style.form}>
     <Form {...layout} form={form} name="userHealthForm" onFinish={onFinish}>
       <Form.Item
         name="temperature"
@@ -105,7 +92,7 @@ const HealthForm = () => {
           },
         ]}
       >
-        <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="status"
@@ -156,7 +143,7 @@ const HealthForm = () => {
           ]}
       >
          <DatePicker
-         />
+           onChange={handleDateChange} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit" onClick={onSubmit}>
@@ -170,7 +157,6 @@ const HealthForm = () => {
         </Button>
       </Form.Item>
     </Form>
-    </div>
   );
 };
 
