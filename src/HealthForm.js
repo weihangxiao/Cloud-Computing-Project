@@ -32,6 +32,7 @@ const tailLayout = {
 //函数式组件: 表单相关的都在这个函数里
 const HealthForm = () => {
 	const [form] = Form.useForm();
+	var dateSubmit;
 
 	const onHealthStatusChange = value => {
 		switch (value) {
@@ -62,7 +63,7 @@ const HealthForm = () => {
 		} else {
 			web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		}
-		var abi = [[
+		var abi = ([
 			{
 				"constant": false,
 				"inputs": [
@@ -77,10 +78,6 @@ const HealthForm = () => {
 					{
 						"name": "_hasSymp",
 						"type": "bool"
-					},
-					{
-						"name": "date",
-						"type": "string"
 					}
 				],
 				"name": "addUser",
@@ -99,10 +96,6 @@ const HealthForm = () => {
 					{
 						"name": "_hasSymp",
 						"type": "bool"
-					},
-					{
-						"name": "date",
-						"type": "string"
 					}
 				],
 				"name": "updateRecord",
@@ -128,47 +121,7 @@ const HealthForm = () => {
 			{
 				"constant": true,
 				"inputs": [],
-				"name": "getUserRecord",
-				"outputs": [
-					{
-						"components": [
-							{
-								"name": "temp",
-								"type": "uint256"
-							},
-							{
-								"name": "hasSymp",
-								"type": "bool"
-							},
-							{
-								"name": "date",
-								"type": "string"
-							},
-							{
-								"name": "total",
-								"type": "uint256"
-							},
-							{
-								"name": "counter",
-								"type": "uint256"
-							},
-							{
-								"name": "code",
-								"type": "uint256"
-							}
-						],
-						"name": "",
-						"type": "tuple"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "userExist",
+				"name": "hasRecord",
 				"outputs": [
 					{
 						"name": "",
@@ -179,19 +132,28 @@ const HealthForm = () => {
 				"stateMutability": "view",
 				"type": "function"
 			}
-		]]
-		var address = "0x053df724e3bff991210db0ae471be25d24e7b454";
-		const myContract = new web3.eth.Contract(abi, address)
+		])
+		var address = "0x40a82B2fC04Eae3abb4Db7BE2fd1EB946C4a52A3";
+		const myContract = new web3.eth.Contract(abi, address);
+		console.log(myContract);
 		var temp = form.getFieldValue("temperature");
 		var status = form.getFieldValue("status") === 'symptom';
-		//TODO: datePicker转化成string
-		var date = form.getFieldValue("date");
+		var date = dateSubmit;
 		console.log(temp, status, date);
-
-		if (myContract.methods.userExist() === false) {
-			myContract.methods.addUser();
-		}
-		myContract.methods.addRecord(temp, status, date);
+		myContract.methods.hasRecord().call(function(error, result){
+			console.log("error: "+error, "result: " + result);
+			if (result == false) {
+				console.log("user does not exist! Add new user")
+				myContract.methods.addUser("name", temp, status).call(function(error, result){
+					console.log("error: "+ error, "result: " + result);
+				});
+			} else {
+				console.log("Pushing record to contract!");
+				myContract.methods.updateRecord(temp, status).call(function(error, result){
+					console.log("error: "+ error, "result: " + result);
+				});
+			}
+		});
 	};
 
 	const onFinish = values => {
@@ -212,6 +174,7 @@ const HealthForm = () => {
 	const handleDateChange = (date, dateString) => {
 		console.log('Selected Time: ', date);
 		console.log('Seleected Time in the format of string', dateString);//也可以用string形式存更方便写入区块链？
+		dateSubmit = dateString;
 	};
 
 	return (

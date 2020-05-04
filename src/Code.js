@@ -6,8 +6,8 @@ import Web3 from 'web3'
 
 const Code = () => {
 	const color = ["#00FF00", "#FFD700", "#DC143C"];
-	const healthClass = 0;
-	const codeValue = { // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
+	var healthClass = 0;
+	var codeValue = { // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
 		account: "区块链账号",
 		record:
 			[
@@ -27,143 +27,97 @@ const Code = () => {
 		} else {
 			web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		}
-		var abi = [[
+		var abi = ([
 			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_name",
-						"type": "string"
-					},
-					{
-						"name": "_temp",
-						"type": "uint256"
-					},
-					{
-						"name": "_hasSymp",
-						"type": "bool"
-					},
-					{
-						"name": "date",
-						"type": "string"
-					}
-				],
-				"name": "addUser",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
+			 "constant": false,
+			 "inputs": [
+			  {
+			   "name": "_name",
+			   "type": "string"
+			  },
+			  {
+			   "name": "_temp",
+			   "type": "uint256"
+			  },
+			  {
+			   "name": "_hasSymp",
+			   "type": "bool"
+			  }
+			 ],
+			 "name": "addUser",
+			 "outputs": [],
+			 "payable": false,
+			 "stateMutability": "nonpayable",
+			 "type": "function"
 			},
 			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_temp",
-						"type": "uint256"
-					},
-					{
-						"name": "_hasSymp",
-						"type": "bool"
-					},
-					{
-						"name": "date",
-						"type": "string"
-					}
-				],
-				"name": "updateRecord",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
+			 "constant": false,
+			 "inputs": [
+			  {
+			   "name": "_temp",
+			   "type": "uint256"
+			  },
+			  {
+			   "name": "_hasSymp",
+			   "type": "bool"
+			  }
+			 ],
+			 "name": "updateRecord",
+			 "outputs": [],
+			 "payable": false,
+			 "stateMutability": "nonpayable",
+			 "type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "getUserCode",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
+			 "constant": true,
+			 "inputs": [],
+			 "name": "getUserCode",
+			 "outputs": [
+			  {
+			   "name": "",
+			   "type": "uint256"
+			  }
+			 ],
+			 "payable": false,
+			 "stateMutability": "view",
+			 "type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "getUserRecord",
-				"outputs": [
-					{
-						"components": [
-							{
-								"name": "temp",
-								"type": "uint256"
-							},
-							{
-								"name": "hasSymp",
-								"type": "bool"
-							},
-							{
-								"name": "date",
-								"type": "string"
-							},
-							{
-								"name": "total",
-								"type": "uint256"
-							},
-							{
-								"name": "counter",
-								"type": "uint256"
-							},
-							{
-								"name": "code",
-								"type": "uint256"
-							}
-						],
-						"name": "",
-						"type": "tuple"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "userExist",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
+			 "constant": true,
+			 "inputs": [],
+			 "name": "hasRecord",
+			 "outputs": [
+			  {
+			   "name": "",
+			   "type": "bool"
+			  }
+			 ],
+			 "payable": false,
+			 "stateMutability": "view",
+			 "type": "function"
 			}
-		]]
-		var address = "0x053df724e3bff991210db0ae471be25d24e7b454";
+		   ])
+		var address = "0x40a82B2fC04Eae3abb4Db7BE2fd1EB946C4a52A3";
 		const myContract = new web3.eth.Contract(abi, address)
-		// console.log(myContract)
-		if (myContract.methods.userExist() === true) {
-			healthClass = myContract.methods.getUserCode();
-			//TODO: 现在只能读取最近一次的record,solidity不能返回struct和array,但我已经在solidity里面把所有的record存了起来,需要想办法怎么返回
-			var ret = myContract.methods.getUserRecord();
-			codeValue.account = ret[0];
-			var rec = {
-				"id": ret[1],
-				"date": ret[2],
-				"temperature": ret[3],
-				"status": ret[4]
-			};
-			codeValue.record.push(rec);
-		} else {
-			healthClass = 0;
-			codeValue = null;
-		}
+		myContract.methods.getUserCode().call(function(error, result){
+			console.log("error: "+error, "result: " + result);
+			healthClass = result;
+		});
+		console.log(myContract.methods.hasRecord());
+		myContract.methods.hasRecord().call(function(error, result){
+			console.log("error: "+error, "result: " + result);
+			if (result == false) {
+				console.log("User doesn't exist!")
+				healthClass = 0;
+			} else {
+				//TODO: 需要能够返回Record
+				myContract.methods.getUserCode().call(function(error, result){
+					console.log("error: "+error, "result: " + result);
+					healthClass = result;
+				});
+				console.log("return record:", healthClass);
+			}
+		});
 	}
 	return (
 		<div>
