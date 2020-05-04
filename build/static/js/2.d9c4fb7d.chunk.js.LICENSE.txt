@@ -57,7 +57,11 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
+/*! JSON v3.2.6 | http://bestiejs.github.io/json3 | Copyright 2012-2013, Kit Cambridge | http://kit.mit-license.org */
+
 /*! https://mths.be/punycode v1.4.1 by @mathias */
+
+/*! https://mths.be/utf8js v2.0.0 by @mathias */
 
 /** @license React v0.19.1
  * scheduler.production.min.js

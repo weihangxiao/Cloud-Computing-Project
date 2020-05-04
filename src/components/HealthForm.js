@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { Form, Input, Button, Select, DatePicker, InputNumber } from 'antd';
+import '../index.css';
+import { Form, Input, Button, Select, DatePicker } from 'antd';
+
 // import config from './aws-exports' // new
 // import Amplify from 'aws-amplify' // new
 // Amplify.configure(config) // new
