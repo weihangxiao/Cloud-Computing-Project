@@ -4,8 +4,6 @@ import './index.css';
 import HealthForm from './HealthForm';
 import Code from './Code';
 import * as serviceWorker from './serviceWorker';
-import QRCode from 'qrcode.react';
-import {Button} from 'antd';
 
 
 ReactDOM.render(

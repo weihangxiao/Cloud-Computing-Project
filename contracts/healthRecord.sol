@@ -1,7 +1,7 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.0;
 
 
-contract healthRecord {
+contract HealthRecord {
     mapping(address => User) internal users;
 
     struct Record {
@@ -21,16 +21,16 @@ contract healthRecord {
 
     // exist or not
     modifier checkUser(address id) {
-        User u = users[id];
-        require(u.id > 0x0);
+        User storage u = users[id];
+        require(u.hasRecord);
         _;
     }
 
     //initial record
-    function addUser(string _name, uint256 _temp, bool _hasSymp) public {
-        User u = users[msg.sender];
-        require(keccak256(_name) != keccak256(""));
-        require(!(u.id > 0x0));
+    function addUser(string memory _name, uint256 _temp, bool _hasSymp) public {
+        User storage u = users[msg.sender];
+        // require(keccak256(_name) != keccak256(""));
+        require(!u.hasRecord);
         u.record.temp = _temp;
         u.record.hasSymp = _hasSymp;
         //initial state
@@ -60,7 +60,7 @@ contract healthRecord {
         public
         checkUser(msg.sender)
     {
-        User u = users[msg.sender];
+        User storage u = users[msg.sender];
         if (_temp <= 37 && !_hasSymp) {
             u.record.counter++;
             if (u.record.counter >= u.record.total) {
@@ -88,12 +88,12 @@ contract healthRecord {
     }
 
     function getUserCode() public view checkUser(msg.sender) returns (uint256) {
-        User u = users[msg.sender];
+        User storage u = users[msg.sender];
         return u.record.code;
     }
 
     function hasRecord() public view returns (bool) {
-        User u = users[msg.sender];
+        User storage u = users[msg.sender];
         return u.hasRecord;
     }
 }
