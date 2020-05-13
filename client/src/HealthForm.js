@@ -5,8 +5,15 @@ import getWeb3 from "./getWeb3";
 
 
 class HealthForm extends React.Component {
-	state = {
-		web3: null, accounts: null, contract: null
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			web3: null, accounts: null, contract: null,
+		}
+		this.tempChange = this.tempChange.bind(this);
+		this.statusChange = this.statusChange.bind(this);
+		this.dateChange = this.dateChange.bind(this);
 	}
 
 	componentDidMount = async () => {
@@ -37,13 +44,14 @@ class HealthForm extends React.Component {
 		}
 	};
 
-	onSubmit = async (values) => {
-		const { accounts, contract } = this.state;
+	onSubmit = async () => {
+		const { web3, accounts, contract } = this.state;
 		//TODO: 1-写操作：实现将表单的values写入区块链数据库（该函数在点击submit按钮后触发),现在默认在命令行输入values
+		console.log(this.state)
 		var temp = this.state.temp;
 		var status = this.state.status === "sick";
 		var date = this.state.date;
-		console.log(temp, status, date);
+		// console.log(temp, status, date);
 		const hasRecord = await contract.methods.hasRecord().call();
 		if (hasRecord) {
 			console.log("User exists! Update record");
@@ -53,16 +61,33 @@ class HealthForm extends React.Component {
 			contract.methods.addUser("name", temp, status).send({ from: accounts[0] });
 		}
 	};
+
+	tempChange(event) {
+		this.setState({ temp: event.target.value });
+	}
+
+	statusChange(event) {
+		this.setState({ status: event.target.value });
+	}
+
+	dateChange(event) {
+		this.setState({ date: event.target.value });
+	}
+
 	render() {
 		return (
-			<form onSubmit={this.onSubmit}>
+			<form action="#" onSubmit={this.onSubmit}>
 				<label>
 					Temperature:
-          			<input type="text" value={this.state.temp} />
+          			<input type="number" onChange={this.tempChange} required />
 					Status:
-          			<input type="text" value={this.state.status} />
+          			{/* <input type="text" onChange={this.statusChange} required/> */}
+					<select onChange={this.statusChange}>
+						<option value="sick">sick</option>
+						<option value="good">good</option>
+					</select>
 					Date:
-          			<input type="text" value={this.state.date} />
+          			<input type="text" onChange={this.dateChange} required />
 				</label>
 				<input type="submit" value="Submit" />
 			</form>
