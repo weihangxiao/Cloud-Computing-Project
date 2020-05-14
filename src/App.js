@@ -65,15 +65,12 @@ class App extends Component {
                 <br></br>
                 <Router>
                     <div className = "link">
-                      <Link to="/"> Code </Link> //default main page is the Qr Code that we could show to others
                       <Link to="/input"> Input </Link>
                       <Link to="/chatbot"> Chatbot </Link>
                     </div>
                     <Switch>
-                      <Route exact path="/">
-                          <Code />
-                      </Route>
                       <Route path="/input">
+                          <Code />
                           <HealthForm />
                       </Route>
                       <Route path="/chatbot">
