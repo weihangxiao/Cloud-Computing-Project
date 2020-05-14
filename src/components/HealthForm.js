@@ -86,10 +86,13 @@ class HealthForm extends React.Component {
 						<option value="sick">sick</option>
 						<option value="good">good</option>
 					</select>
+					<br></br>
 					Date:
           			<input type="text" onChange={this.dateChange} required />
 				</label>
-				<input type="submit" value="Submit" />
+				<Button type="primary" value="Submit" htmlType="button" onClick={this.onSubmit}>
+          Submit
+        </Button>
 			</form>
 		);
 	}

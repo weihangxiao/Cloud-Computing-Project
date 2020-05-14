@@ -71,6 +71,7 @@ class App extends Component {
                     <Switch>
                       <Route path="/input">
                           <Code />
+                          <br></br>
                           <HealthForm />
                       </Route>
                       <Route path="/chatbot">

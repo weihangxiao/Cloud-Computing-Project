@@ -3,16 +3,21 @@ import QRCode from 'qrcode.react';
 import { Button } from 'antd';
 import HealthRecordContract from "./contracts/HealthRecord.json";
 import getWeb3 from "./getWeb3";
+import '../css/App.css'
 
 
 class Code extends React.Component {
-	color = ["#00FF00", "#FFD700", "#DC143C"];
-	state = {
-		web3: null, accounts: null, contract: null,
-		healthClass: 0,
-		codeValue: "" // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			web3: null, accounts: null, contract: null,
+			healthClass: 0,
+			codeValue: ""
+		}
 	}
+
+	color = ["#00FF00", "#FFD700", "#DC143C"];
 
 	componentDidMount = async () => {
 		try {
@@ -21,6 +26,7 @@ class Code extends React.Component {
 
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
+			alert(accounts);
 
 			// Get the contract instance.
 			const networkId = await web3.eth.net.getId();
@@ -64,6 +70,7 @@ class Code extends React.Component {
 				size={120} // size
 				fgColor={this.color[this.state.healthClass]} // QRcode color
 			/>
+			<br></br>
 			<Button type="primary" htmlType="update" onClick={this.onUpdateQRCode}>
 				Update QR Code
     </Button>
