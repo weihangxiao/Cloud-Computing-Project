@@ -9,7 +9,7 @@ class Code extends React.Component {
 	color = ["#00FF00", "#FFD700", "#DC143C"];
 	state = {
 		web3: null, accounts: null, contract: null,
-		healthClass: 0,
+		healthClass: -1,
 		codeValue:  // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
 			[
 				// {
@@ -49,14 +49,41 @@ class Code extends React.Component {
 		}
 	};
 
-	//TODO: 2-查操作：根据区块链返回结果更新上述healthClass和codeValue
-	onUpdateQRCode = async() => {
+	onUpdateQRCode = async () => {
 		const { contract } = this.state;
 		const hasRecord = await contract.methods.hasRecord().call();
 		console.log("hasRecord:", hasRecord);
 		if (hasRecord) {
 			const status = await contract.methods.getUserCode().call();
 			this.setState({ healthClass: status });
+			var gap;
+			var today = new Date();
+			var month = today.getUTCMonth() + 1; //months from 1-12
+			var day = today.getUTCDate();
+			var year = today.getUTCFullYear();
+			var today_str = year + "/" + month + "/" + day;
+			var today_as_int = new Date(today_str).getTime();
+			console.log(today_str, today_as_int);
+			var all_log = [];
+			for (gap = 0; gap < 14; gap++) {
+				var record = await contract.methods.getsRecord(today_as_int, gap).call();
+				if (record[0] > 0) {
+					let status = "good";
+					if (record[2]) {
+						status = "sick";
+					}
+					var date = new Date(record[0] / 1);
+					let log = {
+						"date": date,
+						"temperature": record[1],
+						"status": status
+					}
+					all_log.push(log);
+				}
+			}
+			console.log(all_log);
+			//TODO: Need to generate QRcode for past records
+			this.setState({ codeValue: all_log });
 		} else {
 			console.log("User does not exist!");
 			this.setState({ healthClass: -1 });
