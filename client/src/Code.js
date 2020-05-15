@@ -82,8 +82,7 @@ class Code extends React.Component {
 				}
 			}
 			console.log(all_log);
-			//TODO: Need to generate QRcode for past records
-			this.setState({ codeValue: all_log });
+			this.setState({ codeValue: JSON.stringify(all_log) });
 		} else {
 			console.log("User does not exist!");
 			this.setState({ healthClass: -1 });
