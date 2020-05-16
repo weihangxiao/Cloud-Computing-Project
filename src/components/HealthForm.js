@@ -2,7 +2,7 @@ import React from 'react';
 import '../index.css';
 import HealthRecordContract from "./contracts/HealthRecord.json";
 import getWeb3 from "./getWeb3";
-import { Input, Button, Select, Form } from 'antd';
+import { Button } from 'antd';
 
 class HealthForm extends React.Component {
 
@@ -11,9 +11,11 @@ class HealthForm extends React.Component {
 		this.state = {
 			web3: null, accounts: null, contract: null,
 		}
+		this.nameChange = this.nameChange.bind(this);
 		this.tempChange = this.tempChange.bind(this);
 		this.statusChange = this.statusChange.bind(this);
 		this.dateChange = this.dateChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	componentDidMount = async () => {
@@ -46,21 +48,26 @@ class HealthForm extends React.Component {
 
 	onSubmit = async () => {
 		const { web3, accounts, contract } = this.state;
-		//TODO: 1-写操作：实现将表单的values写入区块链数据库（该函数在点击submit按钮后触发),现在默认在命令行输入values
 		console.log(this.state)
+		var name = this.state.name;
 		var temp = this.state.temp;
 		var status = this.state.status == "sick";
 		var date = this.state.date;
-		// console.log(temp, status, date);
+		var date_as_int = new Date(date).getTime();
+		console.log(name, temp, status, date, date_as_int);
 		const hasRecord = await contract.methods.hasRecord().call();
 		if (hasRecord) {
-			console.log("User exists! Update record");
-			contract.methods.updateRecord(temp, status).send({ from: accounts[0] });
+			console.log("User exists!");
+			contract.methods.addRecord(temp, status, date_as_int).send({ from: accounts[0] });
 		} else {
 			console.log("User does not exist! Add user");
-			contract.methods.addUser("name", temp, status).send({ from: accounts[0] });
+			contract.methods.addUser("name", temp, status, date_as_int).send({ from: accounts[0] });
 		}
 	};
+
+	nameChange(event) {
+		this.setState({ name: event.target.value });
+	}
 
 	tempChange(event) {
 		this.setState({ temp: event.target.value });
@@ -78,18 +85,28 @@ class HealthForm extends React.Component {
 		return (
 			<form action="#" onSubmit={this.onSubmit}>
 				<label>
-					Temperature:
-          			<input type="number" onChange={this.tempChange} required />
-					Status:
-          			{/* <input type="text" onChange={this.statusChange} required/> */}
-					<select onChange={this.statusChange}>
-						<option value="sick">sick</option>
-						<option value="good">good</option>
-					</select>
-					<br></br>
-					Date:
-          			<input type="text" onChange={this.dateChange} required />
+					<p>
+						Name:
+          				<input type="text" onChange={this.nameChange} required />
+					</p>
+					<p>
+						Temperature:
+						<input type="number" onChange={this.tempChange} required />
+					</p>
+					<p>
+						Status:
+						{/* <input type="text" onChange={this.statusChange} required/> */}
+						<select onChange={this.statusChange}>
+							<option value="sick">sick</option>
+							<option value="good">good</option>
+						</select>
+					</p>
+					<p>
+						Date:
+						<input type="date" onChange={this.dateChange} required />
+					</p>
 				</label>
+					<br></br>
 				<Button type="primary" value="Submit" htmlType="button" onClick={this.onSubmit}>
           Submit
         </Button>

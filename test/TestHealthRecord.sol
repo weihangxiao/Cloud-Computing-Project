@@ -11,29 +11,30 @@ contract TestHealthRecord {
 
     // Testing the addUser() function
     function testAddUser() public {
-        bool userHasRecord = record.hasRecord();
+        bool userExist = record.userExist();
         Assert.equal(
-            userHasRecord,
+            userExist,
             false,
             "Before addUser it shouldn't have record."
         );
 
-        record.addUser("name", 37, true);
-        userHasRecord = record.hasRecord();
+        record.addUser("name");
+        record.addRecord(37, true, 200);
+        userExist = record.userExist();
 
         Assert.equal(
-            userHasRecord,
+            userExist,
             true,
             "After addUser it should have record."
         );
     }
 
     // Testing retrieval of a single pet's owner
-    function testHealthCode() public {
-        uint256 code = record.getUserCode();
+    // function testHealthCode() public {
+    //     uint256 code = record.getUserCode();
 
-        Assert.equal(code, 1, "code should be 1.");
-    }
+    //     Assert.equal(code, 1, "code should be 1.");
+    // }
 
     // The id of the pet that will be used for testing
     // uint256 expectedPetId = 8;

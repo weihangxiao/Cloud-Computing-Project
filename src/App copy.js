@@ -67,7 +67,6 @@ class App extends Component {
                     {/* <Navbar.Brand style={style.customflex}>Covid-19 Symptom Checker</Navbar.Brand> */}
                 </Navbar>
                 <br></br>
-
                 <Tabs defaultActiveKey="1">
                   <TabPane tab="Code" key="1" forceRender="true">
                       <Code />
