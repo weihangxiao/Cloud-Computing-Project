@@ -397,8 +397,8 @@ class HealthForm extends React.Component {
 						Status:
 						{/* <input type="text" onChange={this.statusChange} required/> */}
 						<select onChange={this.statusChange}>
-							<option value="sick">sick</option>
-							<option value="good">good</option>
+							<option value="sick" selected="selected">sick</option>
+							<option value="good" selected="selected">good</option>
 						</select>
 					</p>
 					<p>
