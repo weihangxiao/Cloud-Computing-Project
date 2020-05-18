@@ -69,6 +69,7 @@ class ChatBox extends Component {
 
   handleSend = (chatMsg) => {
     this.props.webrtc.shout('chat', chatMsg);
+    console.log(chatMsg);
     this.props.onSend(chatMsg);
   }
   

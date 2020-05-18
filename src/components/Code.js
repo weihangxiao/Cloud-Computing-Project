@@ -100,24 +100,16 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { Button } from 'antd';
-import HealthRecordContract from "../contracts/HealthRecord.json";
-import getWeb3 from "../getWeb3";
+import HealthRecordContract from "./contracts/HealthRecord.json";
+import getWeb3 from "./getWeb3";
 
 
 class Code extends React.Component {
 	color = ["#00FF00", "#FFD700", "#DC143C"];
 	state = {
 		web3: null, accounts: null, contract: null,
-		healthClass: 0,
-		codeValue:  // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
-			[
-				// {
-				// 	"id": 1,
-				// 	"date": "2020-05-01",
-				// 	"temperature": 37,
-				// 	"status": "Feeling Good"
-				// },
-			]
+		healthClass: -1,
+		codeValue: "" // 记录该账号过去所以记录的一个数据结构（扫码后可见）,在表单js文件写入区块链的，可以用一个json来存
 	}
 
 	componentDidMount = async () => {
@@ -127,7 +119,7 @@ class Code extends React.Component {
 
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
-
+			alert(accounts);
 			// Get the contract instance.
 			const networkId = await web3.eth.net.getId();
 			const deployedNetwork = HealthRecordContract.networks[networkId];
@@ -148,14 +140,40 @@ class Code extends React.Component {
 		}
 	};
 
-	//TODO: 2-查操作：根据区块链返回结果更新上述healthClass和codeValue
-	onUpdateQRCode = async() => {
+	onUpdateQRCode = async () => {
 		const { contract } = this.state;
 		const hasRecord = await contract.methods.hasRecord().call();
 		console.log("hasRecord:", hasRecord);
 		if (hasRecord) {
 			const status = await contract.methods.getUserCode().call();
 			this.setState({ healthClass: status });
+			var gap;
+			var today = new Date();
+			var month = today.getUTCMonth() + 1; //months from 1-12
+			var day = today.getUTCDate();
+			var year = today.getUTCFullYear();
+			var today_str = year + "/" + month + "/" + day;
+			var today_as_int = new Date(today_str).getTime();
+			console.log(today_str, today_as_int);
+			var all_log = [];
+			for (gap = 0; gap < 14; gap++) {
+				var record = await contract.methods.getsRecord(today_as_int, gap).call();
+				if (record[0] > 0) {
+					let status = "good";
+					if (record[2]) {
+						status = "sick";
+					}
+					var date = new Date(record[0] / 1);
+					let log = {
+						"date": date,
+						"temperature": record[1],
+						"status": status
+					}
+					all_log.push(log);
+				}
+			}
+			console.log(all_log);
+			this.setState({ codeValue: JSON.stringify(all_log) });
 		} else {
 			console.log("User does not exist!");
 			this.setState({ healthClass: -1 });
@@ -170,10 +188,12 @@ class Code extends React.Component {
 				size={120} // size
 				fgColor={this.color[this.state.healthClass]} // QRcode color
 			/>
+			<br></br>
 			<Button type="primary" htmlType="update" onClick={this.onUpdateQRCode}>
 				Update QR Code
     </Button>
 		</div>)
 	}
 }
+
 export default Code;
