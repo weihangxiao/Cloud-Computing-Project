@@ -4,9 +4,10 @@ import Amplify from 'aws-amplify' // new
 import HealthForm from './components/HealthForm';
 import Code from './components/Code';
 import ChatBox from './components/ChatBox';
+import { Form } from 'antd';
 import './css/App.css'
 import { LioWebRTC } from 'react-liowebrtc';
-import { Navbar, Form, Nav, FormControl } from 'react-bootstrap';
+import { Navbar, Nav, FormControl } from 'react-bootstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 Amplify.configure(config) // new
@@ -53,21 +54,22 @@ class App extends Component {
 
     render() {
         const { chatLog, options } = this.state;
+        // const ref = React.createRef();
         return (
             <div className="App">
-                <Navbar className="headerbar" bg="dark" variant="dark">
+                {/* <Navbar className="headerbar" bg="dark" variant="dark">
                     <div class="col-4"></div>
                     <div class="home col-4" className="title">
                         <div class="h3">Covid-19 Symptom Checker</div>
-                    </div>
+                    </div> */}
                     {/* <Navbar.Brand style={style.customflex}>Covid-19 Symptom Checker</Navbar.Brand> */}
-                </Navbar>
+                {/* </Navbar> */}
                 <br></br>
                 <Router>
                     <Route path="/input" render={props =>
                         <div>
                             <Code />
-                            <HealthForm />
+                            <HealthForm/>
                         </div>}
                     />
                     <Route path="/chatbot" render={props =>

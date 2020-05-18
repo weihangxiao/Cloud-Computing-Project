@@ -96,13 +96,13 @@ class ChatBox extends Component {
     return (
       <div className="container">
         <div className="chatHeader">
-          <h1 className="title">P2P Chat Example</h1>
+          <h1 className="title">P2P Covid-19 Chat Room</h1>
           <hr />
         </div>
         <div className="chatBox" ref={(div) => this.chatBox = div}>
             <div className="choice">
                 <p>Do you want to do symptom check or talk with our experts? 
-                    type 1 for symtom check, 2 for talk with expert</p>
+                    type '1' for checking with chatbot, '2' for talk with expert</p>
             </div>
 
             {this.state.initalMessage=='symptom check' ? (

@@ -1,4 +1,5 @@
-module.exports = function(deployer) {
-  /* Deploy your contract here with the following command */
-  // deployer.deploy(YourContract);
+var HealthRecord = artifacts.require("HealthRecord");
+
+module.exports = function (deployer) {
+    deployer.deploy(HealthRecord);
 };
