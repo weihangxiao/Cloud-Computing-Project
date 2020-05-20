@@ -67,3 +67,7 @@ The server will launch and automatically open a new browser tab containing your 
 
     
   
+## Deployment
+1. We deploy our dapp to Azure
+    https://nyu-covid19-healthcode.azurewebsites.net/
+    Since use Ganache blockchain is easier when run the applicaiton in our local server, so we choose to run blockchain part in our local server.
