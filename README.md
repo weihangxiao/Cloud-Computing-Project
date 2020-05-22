@@ -10,6 +10,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - Node.js v8+ LTS and npm (comes with Node)
+- Truffle and Ganache blockchain test environment
+- Metamask Plugin
 
 ### Installing
 
@@ -75,7 +77,5 @@ Here is one screenshot of our deployed application (https://nyu-covid19-healthco
 
 ![](./screenshots/deployed-app.png)
 
-You can easily migrate it to the cloud and try the same way by sharing the link to your friend and chat in the p2p chatroom. If you have setup the Truffle/Ganache/Metamask envioronment, you can also test the blockchain part (healthcode) easily on your local machine (just like what we demoed above).
-
-**Happy Hacking!**
+You can easily migrate it to the cloud and try the same way by sharing the link to your friend and chat in the p2p chatroom. If you have setup the Truffle/Ganache/Metamask environment, you can also test the blockchain part (healthcode) easily on your local machine (just like what we demoed above).
 
