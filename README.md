@@ -66,7 +66,7 @@ Once installed, a tab in your browser should open displaying the following:
     The server will launch and automatically open a new browser tab containing your dapp.
     ![](./screenshots/dapp.png)
 
-    code becomes “green” which means “low risk” after you clicking “update QR code”
+    The QR code becomes “green” which means “low risk” after you clicking “update QR code”
     ![](./screenshots/green.png)
 
     The QR code becomes “red” meaning “high risk for infection” after you input an abnormal record:
